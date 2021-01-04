@@ -14,7 +14,7 @@ uniform vec2 resolution;
 // #pragma glslify: dither = require(glsl-dither/4x4)
 #pragma glslify: dither = require(glsl-dither/2x2)
 // clang-format on
-const float PHI = 1.61803398874989484820459; // Φ = Golden Ratio 
+const float PHI = 1.61803398874989484820459; // Φ = Golden Ratio
 
 float gold_noise(in vec2 xy, in float seed)
 {
@@ -111,10 +111,11 @@ float f0 =f ;
   vec2 xy = (uv-vec2(1.0)) * resolution ;
   float time = t/ ((1. - f)*1000.);
 
-vec3 noise = vec3(gold_noise(xy, fract(time * f0)+1.0), // r
-                gold_noise(xy, fract(time * f0)+2.0), // g
-                gold_noise(xy, fract(time * f0)+3.0));
+  xy += vec2(-t * sign(f0), 0);
 
+vec3 noise = vec3(gold_noise(xy, 1.0), // r
+                gold_noise(xy, 2.0), // g
+                gold_noise(xy, 3.0));
 
 // vec3 noise0 = vec3(gold_noise(xy, 1.0), // r
 //                   gold_noise(xy, 2.0), // g
